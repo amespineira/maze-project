@@ -11,5 +11,11 @@
 format input as map object
     issue here: mazes usually made up of a bunch of walls not independent impassable coordinates
         -use separate formatter to turn series of walls into impassable coordinates
-create relative map
-find path
+    possible limitations as size increases: takes substantially longer to generate relative maps as maze size increases
+random generation
+displaying on webpage
+storing saved mazes
+user designed mazes
+detecting unsolvable mazes (should be possible with already written code)
+*DONE* create relative map
+*DONE* find path

@@ -1,10 +1,10 @@
 /********NOTES********
 currently, this does not allow for diagonal movement, as it shouldn't be necessary, and it can make things visually confusing
 spec is a javascript object containing:
-   impCor is an array of impassable coordinates, formatted [[cX,cY],[cX,cY]....]
-   size is the size of the two dimensional array, formatted [sX,sY]
-   goal is the end point of the maze, formated [gX, gY]
-   start is the starting point of the maze, formatted [sX, sY]
+   impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
+   size is the size of the two dimensional array, formatted [sY,sX]
+   goal is the end point of the maze, formated [gY, gX]
+   start is the starting point of the maze, formatted [sY, sX]
 
 map is the map of coordinates, with all impassable coordinates containing a value of i, and the goal a value of 1, x for not specified, and s for start
 might want to change structure in terms of where start is used, maybe have it change? probably not...
@@ -37,6 +37,7 @@ function initialize(impCor, size, goal, start){
 }
 MapObj.prototype.solveMap= function(){
   var relativeMap=this.generateRelativeMap();
+  var outputMap=initialize(this.impCor, this.size, this.goal, this.start);
   var currentCor=this.start;
   var numSteps=this.returnClosest(relativeMap, currentCor).value;
   condition=true;
@@ -47,17 +48,19 @@ MapObj.prototype.solveMap= function(){
     }
     else{
       relativeMap[next.cor[0]][next.cor[1]]="p";
+      outputMap[next.cor[0]][next.cor[1]]="p";
+
       currentCor=next.cor;
     }
   }
-  return relativeMap
+  return outputMap
 
 }
 MapObj.prototype.generateRelativeMap = function () {
   var condition=true;
   var relativeMap=initialize(this.impCor, this.size, this.goal, this.start)
 var foundx=false;
-for(var a=0; a<this.size[0]*this.size[1]; a++){
+for(var a=0; a<this.size[0]+this.impCor.length; a++){
     for(var i=0; i<this.size[0]; i++){
       for(var j=0; j<this.size[1]; j++){
         if(relativeMap[i][j]==="x"){
@@ -156,7 +159,7 @@ MapObj.prototype.returnClosest= function(relativeMap, currentCor){
 }
 function isValid(size, cor){
   if(cor[0]<size[0] && cor[1]<size[1]){
-    if(cor[0]>0 && cor[1]>0){
+    if(cor[0]>=0 && cor[1]>=0){
     return true;
     }
   }
