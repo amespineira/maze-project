@@ -1,0 +1,15 @@
+
+
+-Map Object
+  2d array of ints,
+  if value is 0, impassable
+  if 1, goal
+  if adjacent to any non-zero numbers, value is lowest adjacent plus one
+
+
+  functionality needed:
+format input as map object
+    issue here: mazes usually made up of a bunch of walls not independent impassable coordinates
+        -use separate formatter to turn series of walls into impassable coordinates
+create relative map
+find path
