@@ -9,19 +9,43 @@ var isGoal=false;
 var goalVal=0;
 var currentMapSpecs={
   impCor: [],
-  // impCor: [],
-  // impCor is an array of impassable coordinates, formatted [[cX,cY],[cX,cY]....]
+  // impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
   size: [globalSize, globalSize],
-  // size is the size of the two dimensional array, formatted [sX,sY]
+  // size is the size of the two dimensional array, formatted [sY,sX]
   goal:[globalSize-1,globalSize-1],
-  // goal is the end point of the maze, formated [gX, gY]
+  // goal is the end point of the maze, formated [gY, gX]
   start:[0,0]
-  // start is the starting point of the maze, formatted [sX, sY]
+  // start is the starting point of the maze, formatted [sY, sX]
 };
 displayBlankMaze(globalSize);
 $(document).on('click', '.maze-square', changeBlockState);
+$("#solve-button").click(function(){
+  if(quickValCheck()){
+  parseDomToMapSpecs();
+  mazeContainer.innerHTML="";
+  displaySolvedMaze(new MapObj(currentMapSpecs));
+  }
+  else{
+    console.log("not valid");
+  }
+})
+function parseDomToMapSpecs(){
 
-
+  currentMapSpecs.start=calc2DCorFromVal(startVal);
+  currentMapSpecs.goal=calc2DCorFromVal(goalVal);
+  console.log(currentMapSpecs);
+}
+function calc2DCorFromVal(val){
+  var row=0;
+  while(((row+1)*globalSize)<val){
+    row++;
+  }
+  var col=val-((row)*globalSize);
+  return [row, col]
+}
+function quickValCheck(){
+  return (isGoal&&isStart)
+}
 function changeBlockState(event){
 
   var value=this.getAttribute('value').split(' ');
@@ -158,6 +182,9 @@ function clearGoal(){
     $("[value="+"'"+goalVal+" 1']").attr('value',goalVal+" x")
   }
 }
+function clearPath(){
+
+}
 function updateBlock(block){
   var type=block.getAttribute('value').split(' ')[1];
   var size=(1395/globalSize);
@@ -186,93 +213,8 @@ function displayBlankMaze(mazeSize){
   blockSize+="px";
   blockSize="1%"
   for(var i=0; i<mazeSize*mazeSize; i++){
-      // var row=document.createElement('div')
-      // row.setAttribute("class", "row")
-      // row.value=i;
-      // for(var j=0; j<mazeSize; j++)
       var style="background-color:white; width: "+blockSize+"; height: "+blockSize+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
       createBlock(i, style)
-      // mazeContainer.appendChild(row);
   }
-//   var origcollor;
-//   $('.maze-square').hover(function(){
-//     origcollor=$(this).css('background-color')
-//     $(this).css("background-color", "#81a8d8");
-//     }, function(){
-//     $(this).css("background-color", origcollor);
-// });
-}
-function displayUnsolvedMaze(mapObj){
-  mapObj.map.forEach(function(value){
-    value.forEach(function(block, i){
-      var size="1%";
-      var style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-      // if(length===i){
-      // var style="background-color:grey; width: "+size+"%; height: "+size+"%; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-      // }
-      switch(block){
-        case "x":
-          style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-          break;
-        case "_":
-          style="background-color:black; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-          break;
-        case "s":
-          style="background-color:green; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-          break;
-        case 1:
-          style="background-color:red; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-          break;
-      }
-        createBlock(i, style)
-    })
-    })
-}
-function displaySolvedMaze(mapObj){
-    mapObj.solved.forEach(function(value){
-      value.forEach(function(block, i){
-        var size=1;
-        var style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-        // if(length===i){
-        // var style="background-color:grey; width: "+size+"%; height: "+size+"%; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-        // }
-        switch(block){
-          case "p":
-            style="background-color:blue; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-            break;
-          case "x":
-            style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-            break;
-          case "_":
-            style="background-color:black; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-            break;
-          case "s":
-            style="background-color:green; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-            break;
-          case 1:
-            style="background-color:red; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-            break;
-        }
-          createBlock(i, style)
-      })
-      })
 
-}
-function createBlock(i, style){
-  var block=document.createElement('div');
-  block.setAttribute('style',style)
-  block.setAttribute("class", "maze-square");
-  block.setAttribute('value', i+" x")
-  mazeContainer.appendChild(block)
-
-}
-function randomHex(){
-  var out="#";
-  for(var i=0; i<6; i++){
-    out+=hexarray[getRandomInt(0,hex.length)]
-  }
-  return out;
-}
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
 }
