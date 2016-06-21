@@ -39,7 +39,7 @@ function displaySolvedMaze(mapObj){
         // }
         switch(block){
           case "p":
-            style="background-color:blue; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+            style="background-color:#5ad0dc; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
             break;
           case "x":
             style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
@@ -71,6 +71,10 @@ function createBlockWithVal(i, style,val){
   var block=document.createElement('div');
   block.setAttribute('style',style)
   block.setAttribute("class", "maze-square");
+  if(val==="p"){
+    block.setAttribute("class", "maze-square path");
+    val="x";
+  }
   block.setAttribute('value', i+" "+val)
   mazeContainer.appendChild(block)
 }

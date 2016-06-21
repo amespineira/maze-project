@@ -19,20 +19,34 @@ var currentMapSpecs={
 };
 displayBlankMaze(globalSize);
 $(document).on('click', '.maze-square', changeBlockState);
+// $(document).on('hover', '.maze-square', hoverHandler);
+$(".maze-square").hover(hoverIn, hoverOut);
 $("#solve-button").click(function(){
   if(quickValCheck()){
   parseDomToMapSpecs();
   mazeContainer.innerHTML="";
   displaySolvedMaze(new MapObj(currentMapSpecs));
+  currentMapSpecs.impCor=[];
   }
   else{
     console.log("not valid");
   }
 })
+function hoverIn(){
+  $(this).css('border-color','#82ffcb')
+}
+function hoverOut(){
+  $(this).css('border-color','black')
+}
 function parseDomToMapSpecs(){
 
   currentMapSpecs.start=calc2DCorFromVal(startVal);
   currentMapSpecs.goal=calc2DCorFromVal(goalVal);
+  var walls=$("[value~='_']");
+  for(var i=0; i<walls.length; i++){
+    currentMapSpecs.impCor.push(calc2DCorFromVal(walls[i].attributes[2].nodeValue.split(" ")[0]))
+  }
+  console.log(walls);
   console.log(currentMapSpecs);
 }
 function calc2DCorFromVal(val){
@@ -47,7 +61,7 @@ function quickValCheck(){
   return (isGoal&&isStart)
 }
 function changeBlockState(event){
-
+  clearPath();
   var value=this.getAttribute('value').split(' ');
   switch($('#edit-selector').val()){
     case 'start':
@@ -183,8 +197,10 @@ function clearGoal(){
   }
 }
 function clearPath(){
-
+  $(".path").css('background-color','white')
+  $('.path').removeClass('path')
 }
+
 function updateBlock(block){
   var type=block.getAttribute('value').split(' ')[1];
   var size=(1395/globalSize);
