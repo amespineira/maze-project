@@ -28,3 +28,24 @@ header {
 .maze-square{
   background-color: green;
 }
+button{
+color: white;
+background-color: #5a6684;
+font-size: 100%;
+text-decoration: none;
+padding: 10px 30px;
+border-radius: 5px;
+font-family: 'Avenir', sans-serif;
+}
+
+select{
+  margin-top: 15px;
+  margin-bottom: 15px;
+color: white;
+background-color: #5a6684;
+font-size: 100%;
+text-decoration: none;
+padding: 10px 30px;
+border-radius: 5px;
+font-family: 'Avenir', sans-serif;
+}

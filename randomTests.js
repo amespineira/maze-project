@@ -15,7 +15,8 @@ var currentMapSpecs={
   start:[0,0]
   // start is the starting point of the maze, formatted [sY, sX]
 };
-displayBlankMaze(globalSize);
+var randomMapSpecs=generateMaze([globalSize,globalSize], {})
+displaySolvedMaze(new MapObj(randomMapSpecs))
 $(document).on('click', '.maze-square', changeBlockState);
 // $(document).on('hover', '.maze-square', hoverHandler);
 $(".maze-square").hover(hoverIn, hoverOut);

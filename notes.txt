@@ -8,7 +8,7 @@
 
 
   functionality needed:
-format input as map object
+*DONE*format input as map object
     *DONE*issue here: mazes usually made up of a bunch of walls not independent impassable coordinates
         *DONE*-use separate formatter to turn series of walls into impassable coordinates
     other formatting stuff
@@ -16,8 +16,8 @@ format input as map object
 random generation
 displaying on webpage
 storing saved mazes
-user designed mazes
-detecting unsolvable mazes (should be possible with already written code)
+*DONE*user designed mazes
+*APPARENTLY DONE? SEEMS TO WORK CORRECTLY, DON'T REMEMBER CODING IT*detecting unsolvable mazes (should be possible with already written code)
 *DONE* create relative map
 *DONE* find path
 
@@ -37,3 +37,29 @@ Tuesday Plan:
           -no need for display stuff during editing process, there almost definitely be problems with performance and stuff, fix after getting basics working
       Step 1:
         work on editing stuff, don't bother integrating algorithmic stuff yet...
+
+
+Current Plan, as of 12:56 Tue:
+  Done with algorithmic stuff, have editing mazes and displaying them finished. All the basic stuff.
+
+  To work on:
+    Maze Generation -This should probably come last, very tricky in terms of logic stuff, should be doable however
+    Maze Storage -Might be a good next step
+      -need to:
+        -set up database
+        -set up server
+        -save created mazes to database
+        -load created mazes from database
+        -handle basic authentication stuff (optional, but def a good idea)
+    Site format
+      -add splash, options for loading mazes from databases, creating new ones, etc
+    Display Improvements
+      -improve topbar css
+    Editing Improvements
+      -got one big one: drag for creating walls
+        -not essential, good idea
+        -maybe do start end coordinates
+    Refactoring
+      -some improvements possible in mapObj, low priority
+      -Major ones in mazeEditor.js, high priority
+        -could affect reusibility and efficiency further down the road...
