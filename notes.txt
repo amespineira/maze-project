@@ -9,8 +9,9 @@
 
   functionality needed:
 format input as map object
-    issue here: mazes usually made up of a bunch of walls not independent impassable coordinates
-        -use separate formatter to turn series of walls into impassable coordinates
+    *DONE*issue here: mazes usually made up of a bunch of walls not independent impassable coordinates
+        *DONE*-use separate formatter to turn series of walls into impassable coordinates
+    other formatting stuff
     possible limitations as size increases: takes substantially longer to generate relative maps as maze size increases
 random generation
 displaying on webpage
@@ -19,3 +20,20 @@ user designed mazes
 detecting unsolvable mazes (should be possible with already written code)
 *DONE* create relative map
 *DONE* find path
+
+
+
+Tuesday Plan:
+  Two directions I see:
+    Work more on random generation and algorithmic stuff
+    Work on user generation and display stuff
+      To do:
+        Ability to place start and end points
+        Ability to display solution
+        Ability to add walls
+      Notes:
+        Use topbar for selecting stuff, probably going to have to fix the aspect ratio problem
+        Have edit view separate from solved view, use different methods and stuff, clear dom and pass in edited map object when displaying solution
+          -no need for display stuff during editing process, there almost definitely be problems with performance and stuff, fix after getting basics working
+      Step 1:
+        work on editing stuff, don't bother integrating algorithmic stuff yet...

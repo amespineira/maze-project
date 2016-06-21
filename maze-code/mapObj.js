@@ -166,4 +166,4 @@ function isValid(size, cor){
   return false;
 }
 
-module.exports=MapObj;
+// module.exports=MapObj;

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/mazeEditor.css">
+	<title>Maze</title>
+</head>
+<body>
+	<header><select id="edit-selector">
+  <option value="start">Change Start</option>
+  <option value="end">Change End</option>
+  <option value="wall">Add Wall</option>
+	<option value="clear">Clear Block</option>
+
+	</select>
+	<button type="button" id="solve-button">Display Solution</button>
+	</header>
+	<div id="maze-container">
+	</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="./maze-code/mazeFormatter.js"></script>
+  <script type="text/javascript" src="./maze-code/mapObj.js"></script>
+  <script type="text/javascript" src="./maze-code/mazeGenerator.js"></script>
+  <script type="text/javascript" src="mazeEditor.js"></script>
+</body>
+</html>
