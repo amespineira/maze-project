@@ -7,17 +7,37 @@ function hoverIn(){
 }
 function hoverOut(){
   $(this).css('border-color','black')
+  // updateAllBlocks();
+}
+function updateAllBlocks(){
+  for(var i=0; i<globalSize*globalSize; i++){
+    updateBlock($("[value~='"+i+"']"))
+  }
 }
 function parseDomToMapSpecs(){
-
+  console.log("parsing Dom");
+  currentMapSpecs={
+   impCor: [],
+   // impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
+   size: [globalSize, globalSize],
+   // size is the size of the two dimensional array, formatted [sY,sX]
+   goal:[globalSize-1,globalSize-1],
+   // goal is the end point of the maze, formated [gY, gX]
+   start:[0,0]
+   // start is the starting point of the maze, formatted [sY, sX]
+ };
   currentMapSpecs.start=calc2DCorFromVal(startVal);
   currentMapSpecs.goal=calc2DCorFromVal(goalVal);
+  currentMapSpecs.impCor=[];
   var walls=$("[value~='_']");
   for(var i=0; i<walls.length; i++){
     currentMapSpecs.impCor.push(calc2DCorFromVal(walls[i].attributes[2].nodeValue.split(" ")[0]))
   }
+
   console.log(walls);
   console.log(currentMapSpecs);
+  console.log(new MapObj(currentMapSpecs));
+  console.log("parsing Dom");
 }
 function calc2DCorFromVal(val){
   var row=0;
@@ -26,6 +46,9 @@ function calc2DCorFromVal(val){
   }
   var col=val-((row)*globalSize);
   return [row, col]
+}
+function calcValFrom2DCor(corIn){
+  return (corIn[0]*globalSize+corIn[1])
 }
 function quickValCheck(){
   return (isGoal&&isStart)
@@ -51,6 +74,7 @@ function changeBlockState(event){
 
 }
 function changeBlock(block, switchTo){
+
   var value=block.getAttribute('value').split(' ')
   var switchFrom=value[1];
 
@@ -194,8 +218,9 @@ function updateBlock(block){
   block.setAttribute('style',style)
 }
 function displayBlankMaze(mazeSize){
-  var blockSize=(1395/mazeSize);
+  currentMapSpecs.impCor=[];
 
+  var blockSize=(1395/mazeSize);
   blockSize+="px";
   blockSize="1%"
   for(var i=0; i<mazeSize*mazeSize; i++){
@@ -205,6 +230,8 @@ function displayBlankMaze(mazeSize){
 
 }
 function displaySolvedMaze(mapObj){
+    currentMapSpecs.impCor=[];
+
     var count=0;
     mapObj.solved.forEach(function(value){
       value.forEach(function(block, i){
@@ -230,12 +257,46 @@ function displaySolvedMaze(mapObj){
             style="background-color:red; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
             break;
         }
-          createBlockWithVal(count, style, block)
+          createBlockWithValG(count, style, block)
           count++
       })
       })
 
 }
+function displayUnsolvedMaze(mapObj){
+    currentMapSpecs.impCor=[];
+    var count=0;
+    mapObj.solved.forEach(function(value){
+      value.forEach(function(block, i){
+        var size="1%";
+        var style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+        // if(length===i){
+        // var style="background-color:grey; width: "+size+"%; height: "+size+"%; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+        // }
+        switch(block){
+          case "p":
+            style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+            break;
+          case "x":
+            style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+            break;
+          case "_":
+            style="background-color:black; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+            break;
+          case "s":
+            style="background-color:green; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+            break;
+          case 1:
+            style="background-color:red; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+            break;
+        }
+          createBlockWithValG(count, style, block)
+          count++
+      })
+      })
+
+}
+
 function createBlock(i, style){
   var block=document.createElement('div');
   block.setAttribute('style',style)
@@ -254,7 +315,23 @@ function createBlockWithVal(i, style,val){
   block.setAttribute('value', i+" "+val)
   mazeContainer.appendChild(block)
 }
-
+function createBlockWithValG(i, style,val){
+  var block=document.createElement('div');
+  block.setAttribute('style',style)
+  block.setAttribute("class", "maze-square");
+  if(val==="p"){
+    block.setAttribute("class", "maze-square path");
+    val="x";
+  }
+  if(val==="s"){
+    startVal=i;
+  }
+  if(val===1){
+    goalVal=i;
+  }
+  block.setAttribute('value', i+" "+val)
+  mazeContainer.appendChild(block)
+}
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }

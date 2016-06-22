@@ -15,25 +15,27 @@ function MapObj(specs){
   this.size=specs.size;
   this.goal=specs.goal;
   this.start=specs.start;
+  this.init=initialize(specs.impCor, specs.size, specs.goal, specs.start);
   this.map=initialize(specs.impCor, specs.size, specs.goal, specs.start);
   this.relativeMap=this.generateRelativeMap();
   this.solved=this.solveMap();
 }
-
 function initialize(impCor, size, goal, start){
-  var map=[];
+  var output=[];
   for(var i=0; i<size[0]; i++){
-    map.push([]);
+    output.push([]);
     for(var j=0; j<size[1]; j++){
-      map[i].push('x');
+      output[i].push('x');
     }
   }
   impCor.forEach(function(value){
-    map[value[0]][value[1]]="_";
+    if(isValid(size, value)){
+    output[value[0]][value[1]]="_";
+    }
   })
-  map[goal[0]][goal[1]]=1;
-  map[start[0]][start[1]]='s';
-  return map;
+  output[goal[0]][goal[1]]=1;
+  output[start[0]][start[1]]='s';
+  return output;
 }
 MapObj.prototype.solveMap= function(){
   var relativeMap=this.generateRelativeMap();
