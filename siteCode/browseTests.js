@@ -81,8 +81,28 @@ $('#clear-button').click(function(){
   displayBlankMaze(globalSize);
 
 })
-$("#log-button").click(function(){
-  logShit();
+$("#genDisplay-button").click(function(){
+
+  mazeContainer.innerHTML="";
+  displayDepthGen(generateAlgorithmDemonstration([globalSize,globalSize]));
+})
+$("#celDisplay-button").click(function(){
+
+  mazeContainer.innerHTML="";
+  displayCellGen(generateCellularAlgorithmDemo([globalSize,globalSize]));
+
+})
+$("#relative-button").click(function(){
+
+  if(isGoal===true){
+  currentMapSpecs=blankMap;
+  parseDomToMapSpecs();
+  mazeContainer.innerHTML="";
+  displayRelativeArray(new MapObj(currentMapSpecs));
+  }
+  else{
+    console.log("not valid");
+  }
 })
 function logShit(){
   // console.log("******currentMapSpecs");

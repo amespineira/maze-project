@@ -300,7 +300,56 @@ function displayUnsolvedMaze(mapObj){
 
 
 }
-
+function displayRelativeArray(mapObj){
+  console.log(mapObj.relativeMap);
+  var count=0;
+  mapObj.relativeMap.forEach(function(value){
+    value.forEach(function(block, i){
+      var size="1%";
+      var style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+      // if(length===i){
+      // var style="background-color:grey; width: "+size+"%; height: "+size+"%; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+      // }
+      switch(block){
+        case "_":
+          style="background-color:black; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+          break;
+        case "s":
+          style="background-color:green; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+          break;
+        case 1:
+          style="background-color:red; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+          break;
+        default:
+          style="background-color:rgb("+format(block)+"); width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+      }
+        createBlockWithValOverRel(count, style, block)
+        count++
+    })
+    })
+    $(".maze-square").hover(hoverIn, hoverOut);
+}
+function format(input){
+  // input=input+100;
+  input=625-input
+  var output=[0,0,0]
+  if(input>510){
+    output[0]=input-510;
+    output[1]=255;
+    output[2]=255;
+  }
+  else if(input>255){
+      output[0]=0;
+      output[1]=input-255;
+      output[2]=255;
+  }
+  else{
+    output[0]=0;
+    output[1]=0;
+    output[2]=input;
+  }
+  return output[0]+","+output[1]+","+output[2];
+}
 function createBlock(i, style){
   var block=document.createElement('div');
   block.setAttribute('style',style)
@@ -308,11 +357,12 @@ function createBlock(i, style){
   block.setAttribute('value', i+" x")
   mazeContainer.appendChild(block)
 }
-function createBlockWithVal(i, style,val){
+function createBlockWithValOverRel(i, style, val){
   var block=document.createElement('div');
-  block.setAttribute('style',style)
   block.setAttribute("class", "maze-square");
   if(val==="p"){
+    block.setAttribute("class", "maze-square path");
+    style+="border-color:pink;"
     val="x";
   }
   if(val==="s"){
@@ -320,6 +370,30 @@ function createBlockWithVal(i, style,val){
   }
   if(val===1){
     goalVal=i;
+  }
+  if(val!=1&&Number(val)){
+    val="x"
+  }
+  block.setAttribute('style',style)
+  block.setAttribute('value', i+" "+val)
+  mazeContainer.appendChild(block)
+}
+function createBlockWithVal(i, style,val){
+  var block=document.createElement('div');
+  block.setAttribute('style',style)
+  block.setAttribute("class", "maze-square");
+  if(val==="p"){
+    block.setAttribute("class", "maze-square path");
+    val="x";
+  }
+  if(val==="s"){
+    startVal=i;
+  }
+  if(val===1){
+    goalVal=i;
+  }
+  if(val!=1&&Number(val)){
+    val="x"
   }
   block.setAttribute('value', i+" "+val)
   mazeContainer.appendChild(block)
@@ -362,4 +436,63 @@ function createWall(event){
       break;
     }
   updateBlock(this)
+}
+function displayDepthGen(genArray){
+  console.log(genArray);
+  var count=0;
+  var size="1%";
+  genArray.forEach(function(value){
+    value.forEach(function(block, i){
+      var style="background-color:grey; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+
+      if(block!=0){
+      style="background-color:rgb("+formatD(block)+"); width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+      }
+      // if(length===i){
+
+      createBlockWithValOverRel(count, style, block)
+      count++
+    })
+    })
+    $(".maze-square").hover(hoverIn, hoverOut);
+}
+function displayCellGen(genArray){
+  console.log(genArray);
+  // var count=0;
+  // var size="1%";
+  // genArray.forEach(function(value){
+  //   value.forEach(function(block, i){
+  //     var style="background-color:grey; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+  //
+  //     if(block!=0){
+  //     style="background-color:rgb("+formatD(block)+"); width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+  //     }
+  //     // if(length===i){
+  //
+  //     createBlockWithValOverRel(count, style, block)
+  //     count++
+  //   })
+  //   })
+  //   $(".maze-square").hover(hoverIn, hoverOut);
+}
+function formatD(input){
+  // input=input+100;
+  input=Math.floor(625-(input/10))
+  var output=[0,0,0]
+  if(input>510){
+    output[0]=input-510;
+    output[1]=255;
+    output[2]=255;
+  }
+  else if(input>255){
+      output[0]=0;
+      output[1]=input-255;
+      output[2]=255;
+  }
+  else{
+    output[0]=0;
+    output[1]=0;
+    output[2]=input;
+  }
+  return output[0]+","+output[1]+","+output[2];
 }

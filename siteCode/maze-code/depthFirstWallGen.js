@@ -3,7 +3,6 @@ var moved=false;
 var done=false;
 var steps=[]
 function generateWallsDepthFirst(size){
-  console.log("here");
   var currentCor=[1,1];
   var prevCor=[0,0]
   var arr=genBlank(size);
@@ -26,6 +25,34 @@ function generateWallsDepthFirst(size){
 
   return makeImpCorFromArr(arr);
 }
+function generateAlgorithmDemonstration(size){
+  var currentCor=[1,1];
+  var prevCor=[0,0]
+  var arr=genBlank(size);
+  var out=genBlank(size)
+  var nextStep;
+  arr[1][1]=1;
+  out[1][1]=1;
+  // console.log(arr);
+  // while(done===false){
+  for(var i=0; i<10000; i++){
+    if(out[currentCor[0]][currentCor[1]]===0)
+    {
+      out[currentCor[0]][currentCor[1]]=i;
+    }
+    nextStep=calcNextStepPath(arr, currentCor, prevCor);
+    arr=nextStep.arrO;
+    prevCor=nextStep.prevO;
+    currentCor=nextStep.corO;
+    // console.log("***currentCor");
+    // console.log(currentCor);
+    // console.log("***prevCor");
+    // console.log(prevCor);
+    moved=true;
+  }
+  arr[1][1]=2;
+  return out;
+}
   //Solved if all cells have one or more neighbors...
   //if not, get next step
   //if no valid next step, go back one spot, if you go back all the way to the beggining, your done
@@ -40,11 +67,7 @@ function makeImpCorFromArr(arr){
   }
   return out;
 }
-function logWalls(arr){
-  arr.forEach(function(value){
-    console.log(value);
-  })
-}
+
 function calcNextStepPath(arr, currentCor, prevCor){
   var pref=[(currentCor[0]+(currentCor[0]-prevCor[0])),(currentCor[1]+(currentCor[1]-prevCor[1]))]
   var up=[(currentCor[0]-1),currentCor[1]];
