@@ -1,4 +1,4 @@
-var apiUrl="http://localhost:3000/"
+var apiUrl="https://localhost:3000/"
 function getMazes(){
   var httpRequest = new XMLHttpRequest();
 
@@ -10,7 +10,7 @@ function getMazes(){
     }
   }
   }
-  var url="http://localhost:3000/mazes/"
+  var url="https://localhost:3000/mazes/"
   httpRequest.open('GET', url);
   httpRequest.send();
 };

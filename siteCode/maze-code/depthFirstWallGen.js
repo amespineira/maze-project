@@ -20,6 +20,7 @@ function generateWallsDepthFirst(size){
     // console.log(currentCor);
     // console.log("***prevCor");
     // console.log(prevCor);
+    moved=true;
   }
   arr[1][1]=2;
 
@@ -45,11 +46,19 @@ function logWalls(arr){
   })
 }
 function calcNextStepPath(arr, currentCor, prevCor){
+  var pref=[(currentCor[0]+(currentCor[0]-prevCor[0])),(currentCor[1]+(currentCor[1]-prevCor[1]))]
   var up=[(currentCor[0]-1),currentCor[1]];
   var down=[(currentCor[0]+1),currentCor[1]];
   var left=[currentCor[0],(currentCor[1]-1)];
   var right=[currentCor[0],(currentCor[1]+1)];
+  var next=false;
   var viable=[];
+  if(moved===true&&isValid([arr.length,arr[0].length],pref))
+  {
+    if(pathValidityTest(arr,pref)){
+      next=true;
+    }
+  }
   if(isValid([arr.length,arr[0].length],left))
   {
     if(pathValidityTest(arr,left)){
@@ -92,10 +101,17 @@ function calcNextStepPath(arr, currentCor, prevCor){
   }
 
   var chance=getRandomInt(0,viable.length);
-  arr[viable[chance][0]][viable[chance][1]]=1;
+  var chance2=getRandomInt(0,3)
+  var cor=viable[chance]
+  if(next===true){
+    if(chance2===0){
+        cor=pref
+    }
+  }
+  arr[cor[0]][cor[1]]=1;
   return {
     arrO: arr,
-    corO: viable[chance],
+    corO: cor,
     prevO: currentCor
   }
 

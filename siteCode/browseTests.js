@@ -52,8 +52,16 @@ $('#generate-button').click(function(){
   currentMapSpecs=generateMaze([globalSize,globalSize], {}, $('#gen-type').val())
   isStart=true;
   isGoal=true;
-
-  displaySolvedMaze(new MapObj(currentMapSpecs))
+  switch($('#solution-show').val()){
+    case 'shown':
+    displaySolvedMaze(new MapObj(currentMapSpecs))
+      break;
+    case 'hidden':
+    displayUnsolvedMaze(new MapObj(currentMapSpecs))
+      break;
+    default:
+    displaySolvedMaze(new MapObj(currentMapSpecs))
+  }
   logShit();
     currentMapSpecs=blankMap;
 })
