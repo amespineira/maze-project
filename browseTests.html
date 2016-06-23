@@ -12,7 +12,11 @@
 	<option value="clear">Clear Block</option>
 	</select>
 	<button type="button" id="solve-button">Display Solution</button>
-	<button type="button" id="generate-button">Generate Random</button>
+  <select id="gen-type">
+  <option value="cellular">Cellular Gen</option>
+  <option value="depth-first">Depth First Gen</option>
+	</select>
+  <button type="button" id="generate-button">Generate Random</button>
 	<button type="button" id="submit-button">Submit Maze</button>
 	<button type="button" id="clear-button">Clear Page</button>
   <button type="button" id="browse-button">Browse Mazes</button>
@@ -21,9 +25,11 @@
 	<div id="maze-container">
 	</div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="./maze-code/depthFirstWallGen.js"></script>
   <script type="text/javascript" src="./maze-code/mazeFormatter.js"></script>
   <script type="text/javascript" src="./maze-code/mapObj.js"></script>
   <script type="text/javascript" src="./maze-code/mazeGenerator.js"></script>
+  <script type="text/javascript" src="./maze-code/cellularGen.js"></script>
 	<script type="text/javascript" src="mazeDisplayer.js"></script>
   <script type="text/javascript" src="mazeApi.js"></script>
   <script type="text/javascript" src="browseTests.js"></script>

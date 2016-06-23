@@ -1,8 +1,34 @@
 
-function generateMaze(sizein, specs){
+function generateMaze(sizein, specs, type){
   console.log("genning...");
+  console.log(type);
+  switch(type){
+    case 'cellular':
+    return generateCellular(sizein, specs)
+      break;
+    case 'depth-first':
+      return generateDepthFirst(sizein, specs)
+      break;
+    default:
+    return generateDepthFirst(sizein, specs)
+  }
+}
+function generateDepthFirst(sizein ,specs){
   return {
-    impCor: makeWallsCelular(sizein),
+    impCor: generateWallsDepthFirst(sizein),
+    // impCor: [[0,0],[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[86,86],[85,85],[84,84],[83,83],[82,82],[81,81],[80,80]],
+    // impCor is an array of impassable coordinates, formatted [[cX,cY],[cX,cY]....]
+    size: sizein,
+    // size is the size of the two dimensional array, formatted [sX,sY]
+    goal:[getRandomInt(0,sizein[0]),getRandomInt(0,sizein[1])],
+    // goal is the end point of the maze, formated [gX, gY]
+    start:[1,1]
+    // start is the starting point of the maze, formatted [sX, sY]
+  }
+}
+function generateCellular(sizein, specs){
+  return {
+    impCor: makeWallsCellular(sizein),
     // impCor: [[0,0],[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[86,86],[85,85],[84,84],[83,83],[82,82],[81,81],[80,80]],
     // impCor is an array of impassable coordinates, formatted [[cX,cY],[cX,cY]....]
     size: sizein,
@@ -12,42 +38,6 @@ function generateMaze(sizein, specs){
     start:[getRandomInt(0,sizein[0]),getRandomInt(0,sizein[1])]
     // start is the starting point of the maze, formatted [sX, sY]
   }
-}
-function makeWallsCelular(size){
-  var startArr=genRandomArray(size);
-  var output=[];
-  for(var i=0; i<10; i++){
-    startArr=calcNextStep(startArr)
-  }
-  startArr.forEach(function(row, rowI){
-    row.forEach(function(value,colI){
-      if(value==="1"){
-        output.push([rowI,colI])
-      }
-    })
-  })
-  return output;
-}
-
-function calcNextStep(arr){
-  var next=arr;
-  for(var i=0; i<arr.length; i++)
-    {
-      for(var j=0; j<arr[i].length; j++){
-        var neighbors=returnNumberOfNeighbors(arr,[i,j])
-        if(arr[i][j]===0){
-          if(neighbors===3){
-            next[i][j]=1;
-          }
-        }
-        else{
-          if(neighbors>1&&neighbors<4){
-            next[i][j]=1;
-          }
-        }
-      }
-    }
-  return next;
 }
 function returnNumberOfNeighbors(arr, currentCor){
   var neighbors=0;

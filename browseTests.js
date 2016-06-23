@@ -49,7 +49,7 @@ $("#submit-button").click(function(){
 $('#generate-button').click(function(){
   mazeContainer.innerHTML="";
 
-  currentMapSpecs=generateMaze([globalSize,globalSize], {})
+  currentMapSpecs=generateMaze([globalSize,globalSize], {}, $('#gen-type').val())
   isStart=true;
   isGoal=true;
 

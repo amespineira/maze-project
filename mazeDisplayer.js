@@ -37,7 +37,7 @@ function parseDomToMapSpecs(){
 }
 function calc2DCorFromVal(val){
   var row=0;
-  while(((row+1)*globalSize)<val){
+  while(((row+1)*globalSize)<=val){
     row++;
   }
   var col=val-((row)*globalSize);
