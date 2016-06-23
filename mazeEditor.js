@@ -5,7 +5,7 @@ var isStart=false;
 var startVal=0;
 var isGoal=false;
 var goalVal=0;
-var currentMapSpecs={
+var blankMap={
   impCor: [],
   // impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
   size: [globalSize, globalSize],
@@ -15,19 +15,82 @@ var currentMapSpecs={
   start:[0,0]
   // start is the starting point of the maze, formatted [sY, sX]
 };
+var currentMapSpecs=blankMap;
+
 displayBlankMaze(globalSize);
 $(document).on('click', '.maze-square', changeBlockState);
 // $(document).on('hover', '.maze-square', hoverHandler);
-$(".maze-square").hover(hoverIn, hoverOut);
+// $(".maze-square").hover(hoverIn, hoverOut);
+$(document).on('hover', '.maze-square', hoverIn, hoverOut);
 $("#solve-button").click(function(){
+
   if(quickValCheck()){
+  currentMapSpecs=blankMap;
   parseDomToMapSpecs();
+  logShit();
   mazeContainer.innerHTML="";
   displaySolvedMaze(new MapObj(currentMapSpecs));
   $(".maze-square").hover(hoverIn, hoverOut);
-  currentMapSpecs.impCor=[];
   }
   else{
     console.log("not valid");
   }
 })
+$('#generate-button').click(function(){
+  mazeContainer.innerHTML="";
+  currentMapSpecs=generateMaze([globalSize,globalSize], {})
+  isStart=true;
+  isGoal=true;
+
+  displaySolvedMaze(new MapObj(currentMapSpecs))
+  logShit();
+    currentMapSpecs=blankMap;
+})
+$('#clear-button').click(function(){
+  mazeContainer.innerHTML="";
+
+   currentMapSpecs={
+    impCor: [],
+    // impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
+    size: [globalSize, globalSize],
+    // size is the size of the two dimensional array, formatted [sY,sX]
+    goal:[globalSize-1,globalSize-1],
+    // goal is the end point of the maze, formated [gY, gX]
+    start:[0,0]
+    // start is the starting point of the maze, formatted [sY, sX]
+  };
+  displayBlankMaze(globalSize);
+
+})
+$("#log-button").click(function(){
+  logShit();
+})
+function logShit(){
+  // console.log("******currentMapSpecs");
+  // console.log(currentMapSpecs);
+  // console.log("******startVal");
+  // console.log(startVal);
+  // console.log("******isStart")
+  // console.log(isStart);
+  // console.log("******goalVal");
+  // console.log(goalVal);
+  // console.log("******isGoal")
+  // console.log(isGoal);
+  // var test=currentMapSpecs;
+  // console.log("****morestuff");
+  // console.log(test.start);
+  // console.log(startVal);
+  // console.log("****");
+  // console.log(calcValFrom2DCor(test.start));
+  // console.log(calc2DCorFromVal(startVal));
+  // console.log("****");
+  // console.log(test.goal);
+  // console.log(goalVal);
+  // console.log("****");
+  // console.log(calcValFrom2DCor(test.goal));
+  // console.log(calc2DCorFromVal(goalVal));
+  // console.log(test);
+  // parseDomToMapSpecs();
+  // console.log(currentMapSpecs);
+  // console.log(new MapObj(currentMapSpecs));
+}

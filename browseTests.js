@@ -5,6 +5,7 @@ var isStart=false;
 var startVal=0;
 var isGoal=false;
 var goalVal=0;
+var result;
 var blankMap={
   impCor: [],
   // impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
@@ -32,6 +33,17 @@ $("#solve-button").click(function(){
   }
   else{
     console.log("not valid");
+  }
+})
+$("#browse-button").click(function(){
+  getMazes();
+
+})
+$("#submit-button").click(function(){
+  var name=prompt("please enter a name for the maze", "My Maze");
+  if (name != null) {
+    submitMaze(name);
+
   }
 })
 $('#generate-button').click(function(){

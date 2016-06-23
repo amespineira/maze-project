@@ -61,8 +61,8 @@ MapObj.prototype.solveMap= function(){
 MapObj.prototype.generateRelativeMap = function () {
   var condition=true;
   var relativeMap=initialize(this.impCor, this.size, this.goal, this.start)
-var foundx=false;
-for(var a=0; a<this.size[0]+this.impCor.length; a++){
+  var foundx=false;
+  for(var a=0; a<this.size[0]+this.impCor.length; a++){
     for(var i=0; i<this.size[0]; i++){
       for(var j=0; j<this.size[1]; j++){
         if(relativeMap[i][j]==="x"){

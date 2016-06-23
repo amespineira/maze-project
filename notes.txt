@@ -13,9 +13,9 @@
         *DONE*-use separate formatter to turn series of walls into impassable coordinates
     other formatting stuff
     possible limitations as size increases: takes substantially longer to generate relative maps as maze size increases
-random generation
-displaying on webpage
-storing saved mazes
+*DONE*random generation
+*DONE*displaying on webpage
+*DONE*storing saved mazes
 *DONE*user designed mazes
 *APPARENTLY DONE? SEEMS TO WORK CORRECTLY, DON'T REMEMBER CODING IT*detecting unsolvable mazes (should be possible with already written code)
 *DONE* create relative map
@@ -44,6 +44,7 @@ Current Plan, as of 12:56 Tue:
 
   To work on:
     Maze Generation -This should probably come last, very tricky in terms of logic stuff, should be doable however
+      -Have version using cellular automaton, displays correctly and everything (this was a huuuuge pain in the ass)
     Maze Storage -Might be a good next step
       -need to:
         -set up database

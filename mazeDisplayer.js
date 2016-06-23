@@ -15,7 +15,6 @@ function updateAllBlocks(){
   }
 }
 function parseDomToMapSpecs(){
-  console.log("parsing Dom");
   currentMapSpecs={
    impCor: [],
    // impCor is an array of impassable coordinates, formatted [[cY,cX],[cY,cX]....]
@@ -33,11 +32,8 @@ function parseDomToMapSpecs(){
   for(var i=0; i<walls.length; i++){
     currentMapSpecs.impCor.push(calc2DCorFromVal(walls[i].attributes[2].nodeValue.split(" ")[0]))
   }
+  return currentMapSpecs
 
-  console.log(walls);
-  console.log(currentMapSpecs);
-  console.log(new MapObj(currentMapSpecs));
-  console.log("parsing Dom");
 }
 function calc2DCorFromVal(val){
   var row=0;
@@ -216,8 +212,11 @@ function updateBlock(block){
       break;
   }
   block.setAttribute('style',style)
+  $(".maze-square").hover(hoverIn, hoverOut);
+
 }
 function displayBlankMaze(mazeSize){
+
   currentMapSpecs.impCor=[];
 
   var blockSize=(1395/mazeSize);
@@ -227,6 +226,7 @@ function displayBlankMaze(mazeSize){
       var style="background-color:white; width: "+blockSize+"; height: "+blockSize+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
       createBlock(i, style)
   }
+  $(".maze-square").hover(hoverIn, hoverOut);
 
 }
 function displaySolvedMaze(mapObj){
@@ -261,6 +261,7 @@ function displaySolvedMaze(mapObj){
           count++
       })
       })
+      $(".maze-square").hover(hoverIn, hoverOut);
 
 }
 function displayUnsolvedMaze(mapObj){
@@ -334,4 +335,23 @@ function createBlockWithValG(i, style,val){
 }
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
+}
+function createWall(event){
+  clearPath();
+  var value=this.getAttribute('value').split(' ');
+  switch($('#edit-selector').val()){
+    case 'start':
+      changeBlock(this, "s")
+      break;
+    case 'end':
+      changeBlock(this, "1")
+      break;
+    case 'wall':
+      changeBlock(this, "_")
+      break;
+    case 'clear':
+      changeBlock(this, "x")
+      break;
+    }
+  updateBlock(this)
 }

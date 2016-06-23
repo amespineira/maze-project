@@ -20,15 +20,12 @@ function makeWallsCelular(size){
     startArr=calcNextStep(startArr)
   }
   startArr.forEach(function(row, rowI){
-    console.log(row);
     row.forEach(function(value,colI){
       if(value==="1"){
         output.push([rowI,colI])
       }
     })
   })
-  console.log(output);
-  console.log(startArr);
   return output;
 }
 
