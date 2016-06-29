@@ -457,23 +457,40 @@ function displayDepthGen(genArray){
     $(".maze-square").hover(hoverIn, hoverOut);
 }
 function displayCellGen(genArray){
+  var count=0;
+  var size="1%";
+  var final=genArray[0]
+
   console.log(genArray);
-  // var count=0;
-  // var size="1%";
-  // genArray.forEach(function(value){
-  //   value.forEach(function(block, i){
-  //     var style="background-color:grey; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-  //
-  //     if(block!=0){
-  //     style="background-color:rgb("+formatD(block)+"); width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
-  //     }
-  //     // if(length===i){
-  //
-  //     createBlockWithValOverRel(count, style, block)
-  //     count++
-  //   })
-  //   })
-  //   $(".maze-square").hover(hoverIn, hoverOut);
+  var count=0;
+  var stuff=setInterval(function(){
+    console.log(count);
+    console.log("thing");
+    displayCellThing(count, genArray)
+    count++
+    if(count>=genArray.length){
+      count=0;
+    }
+}, 1000);
+
+}
+function displayCellThing(count, genArray){
+  mazeContainer.innerHTML=""
+  var size="1%";
+    genArray[count].forEach(function(value){
+      value.forEach(function(block, i){
+      var style="background-color:white; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+
+      if(block!=0){
+        // console.log(block);
+      style="background-color:black; width: "+size+"; height: "+size+"; float: left; padding-bottom: 1%; margin: 0; padding-top:0;  border-style: solid; border-width:1px;";
+      }
+      // if(length===i){
+
+      createBlockWithValOverRel(count, style, block)
+    })
+  })
+
 }
 function formatD(input){
   // input=input+100;

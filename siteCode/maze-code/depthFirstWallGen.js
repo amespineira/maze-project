@@ -3,6 +3,7 @@ var moved=false;
 var done=false;
 var steps=[]
 function generateWallsDepthFirst(size){
+  console.log("starting gen");
   var currentCor=[1,1];
   var prevCor=[0,0]
   var arr=genBlank(size);
@@ -22,7 +23,7 @@ function generateWallsDepthFirst(size){
     moved=true;
   }
   arr[1][1]=2;
-
+  console.log("done with gen")
   return makeImpCorFromArr(arr);
 }
 function generateAlgorithmDemonstration(size){

@@ -6,7 +6,7 @@ spec is a javascript object containing:
    goal is the end point of the maze, formated [gY, gX]
    start is the starting point of the maze, formatted [sY, sX]
 
-map is the map of coordinates, with all impassable coordinates containing a value of i, and the goal a value of 1, x for not specified, and s for start
+map is the map of coordinates, with all impassable coordinates containing a value of i, the goal a value of 1, x for not specified, and s for start
 might want to change structure in terms of where start is used, maybe have it change? probably not...
 should put in some sort of is valid check... find cases where input breaks it and add tests
 */

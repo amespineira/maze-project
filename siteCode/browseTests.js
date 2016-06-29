@@ -17,6 +17,7 @@ var blankMap={
   // start is the starting point of the maze, formatted [sY, sX]
 };
 var currentMapSpecs=blankMap;
+var mapObj;
 displayBlankMaze(globalSize);
 $(document).on('click', '.maze-square', changeBlockState);
 $(document).on('dblclick', '.maze-square', createWall);
